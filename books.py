@@ -47,4 +47,21 @@ async def create_book(new_book = Body()):
   books.append(new_book)
   return new_book
   
+@app.put("books/update_book")
+async def update_book(updated_book = Body()):
+  for i in range(len(books)):
+    if books[i].id == updated_book.id:
+      books[i] = updated_book
+      return updated_book
+  return {"error": "Book not found"}
+
+@app.delete("books/{id}")
+async def delete_book(id: int):
+  for i in range(len(books)):
+    if books[i].id == id:
+      books.pop(i)
+      return {"message": "Book deleted"}
+  return {"error": "Book not found"}
+
+      
     
